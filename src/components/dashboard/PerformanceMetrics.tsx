@@ -1,7 +1,7 @@
 import { createServer } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import RecentSessions from "./RecentSessions";
-import {CheckCircle, type LucideIcon, Blend, HeartCrack } from "lucide-react";
+import {CheckCircle, type LucideIcon, Blend, HeartCrack, Cable } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 async function getPerformanceStats() {
   const supabase = await createServer();
@@ -19,21 +19,48 @@ async function getPerformanceStats() {
     return {
       totalQuestionsAnswered: 0,
       totalSessions: 0,
+      averageAccuracy: 0,
   }; }
   
   const totalQuestionsAnswered = sessions.reduce((sum, s) => sum + s.total_questions, 0);
+  const totalCorrectAnswers = sessions.reduce((sum, s) => sum + s.score, 0);
+  const averageAccuracy = totalQuestionsAnswered > 0 
+    ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) 
+    : 0;
 
   return {
     totalQuestionsAnswered,
     totalSessions: sessions.length,
+    averageAccuracy,
 }; }
 
-function KPICard({ title, value, description, icon: Icon }: {
+function getAccuracyBarColor(accuracy: number) {
+  if (accuracy >= 80) return "bg-green-500 dark:bg-green-800";
+  if (accuracy >= 60) return "bg-yellow-500 dark:bg-yellow-800";
+  return "bg-red-500 dark:bg-red-800";
+}
+
+function getAccuracyTextColor(accuracy: number) {
+  if (accuracy >= 80) return "text-green-500 dark:text-green-800";
+  if (accuracy >= 60) return "text-yellow-500 dark:text-yellow-800";
+  return "text-red-500 dark:text-red-800";
+}
+
+
+function KPICard({ title, value, description, icon: Icon, 
+  percentage 
+}: {
   title: string;
   value: string | number;
   description?: string;
   icon: LucideIcon;
+  percentage?: number;
 }) {
+
+  const barWidth = percentage !== undefined ? percentage : 100;
+  const barColor = percentage !== undefined ? getAccuracyBarColor(percentage) : "bg-primary";
+  const textColor = percentage !== undefined ? getAccuracyTextColor(percentage) : undefined;
+
   return (
     <Card className="h-full">
       <CardHeader className="px-6 pt-0">
@@ -47,10 +74,16 @@ function KPICard({ title, value, description, icon: Icon }: {
       </CardHeader>
 
       <CardContent className="p-6 pt-3 text-center space-y-6 flex flex-col flex-grow justify-between">
-        <p className="text-3xl font-bold">{value}</p>
+        {/* MUDANÇA: 'cn' é usado para aplicar a 'textColor' dinâmica somente quando ela existir */}
+        <p className={cn("text-3xl font-bold", textColor)}>
+          {value}
+        </p>
         
-        <div className="w-full bg-secondary rounded-full h-2">
-          <div className="bg-primary rounded-full h-2 w-full"></div>
+        <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
+          <div 
+            className={cn("rounded-full h-2 transition-all duration-500", barColor)}
+            style={{ width: `${barWidth}%` }}
+          />
         </div>
       </CardContent>
 
@@ -78,25 +111,29 @@ export default async function PerformanceMetrics() {
   ); }
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
-        <KPICard
-          title="Questões Resolvidas"
-          value={stats.totalQuestionsAnswered}
-          description="Soma de todas as perguntas respondidas desde o início."
-          icon={CheckCircle}
-        />
-        
-        <KPICard
-          title="Sessões Resolvidas"
-          value={stats.totalSessions}
-          description="Um número total dos conjuntos de questões completados."
-          icon={Blend}
-        />
-      </div>
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <div className="lg:col-span-2">
-        <RecentSessions />
-      </div>
+      {/* Card 1 e 2: Estáticos */}
+      <KPICard
+        title="Questões Resolvidas"
+        value={stats.totalQuestionsAnswered}
+        description="Soma de todas as perguntas respondidas desde o início."
+        icon={CheckCircle}
+      />      
+      <KPICard
+        title="Sessões Resolvidas"
+        value={stats.totalSessions}
+        description="Um número total dos conjuntos de questões completados."
+        icon={Blend}
+      />
+
+      {/* Card 3: Dinâmico */}
+      <KPICard
+        title="Desempenho Médio"
+        value={`${stats.averageAccuracy}%`}
+        description="Percentual de acertos em todas as sessões."
+        icon={Cable}
+        percentage={stats.averageAccuracy}
+      />
     </section>
 ); }

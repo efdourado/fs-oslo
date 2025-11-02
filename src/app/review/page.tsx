@@ -68,10 +68,10 @@ type ReviewPageProps = {
 }>; };
 
 function getErrorBarColor(percentage: number) {
-  if (percentage < 20) return "bg-green-500";
-  if (percentage < 40) return "bg-yellow-500";
+  if (percentage < 20) return "bg-green-500 dark:bg-green-800";
+  if (percentage < 40) return "bg-yellow-500 dark:bg-yellow-800";
 
-  return "bg-red-500";
+  return "bg-red-500 dark:bg-red-800";
 }
 
 export default async function ReviewPage({ searchParams }: ReviewPageProps) {
@@ -321,8 +321,10 @@ export default async function ReviewPage({ searchParams }: ReviewPageProps) {
           </Card>
         ) : reviewQuestions.length === 0 ? (
           <>
+
             {/* --- 3. Limpo em dois casos --- */}
             {resolvedSearchParams.subject || resolvedSearchParams.errorType ? (
+
               // Caso 1: Filtros
               <Card className="border-2 border bg-card mt-8">
                 <CardContent className="flex flex-col items-center justify-center py-16 text-center">
@@ -338,6 +340,7 @@ export default async function ReviewPage({ searchParams }: ReviewPageProps) {
                 </CardContent>
               </Card>
             ) : (
+
               // Caso 2: Sem erros
               <Card className="border-2 border bg-card mt-8">
                 <CardContent className="flex flex-col items-center justify-center py-16 text-center">

@@ -43,21 +43,21 @@ function SubjectCardSkeleton() {
 function SubjectCard({ subject }: { subject: SubjectStat }) {
   const accuracyColor =
     subject.average_accuracy >= 80
-      ? "text-green-600 dark:text-green-400"
+      ? "text-green-500 dark:text-green-800"
       : subject.average_accuracy >= 60
-      ? "text-yellow-600 dark:text-yellow-400"
-      : "text-red-600 dark:text-red-400";
+      ? "text-yellow-500 dark:text-yellow-800"
+      : "text-red-500 dark:text-red-800";
 
   const barBgColor =
     subject.average_accuracy >= 80
-      ? "bg-green-500"
+      ? "bg-green-500 dark:bg-green-800"
       : subject.average_accuracy >= 60
-      ? "bg-yellow-500"
-      : "bg-red-500";
+      ? "bg-yellow-500 dark:bg-yellow-800"
+      : "bg-red-500 dark:bg-red-800";
 
   return (
     <Link href={`/practice/${subject.id}`} className="w-full">
-      <Card className="flex flex-col h-full border-2 border-blue-300 dark:border-blue-500 transition-transform duration-200 transform hover:scale-101 hover:shadow-lg cursor-pointer pb-0">
+      <Card className="flex flex-col h-full border-2 border-blue-300 dark:border-blue-800 transition-transform duration-200 transform hover:scale-101 hover:shadow-lg cursor-pointer pb-0">
         <CardHeader className="px-6 pt-0">
           <div className="flex items-center gap-3">
             <Book className="h-6 w-6 text-muted-foreground" />
@@ -107,7 +107,7 @@ function SubjectCard({ subject }: { subject: SubjectStat }) {
             </div>
           ) : (
             <div className="text-center pt-3">
-              <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-300 to-indigo-400 dark:from-blue-500 dark:to-indigo-600 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-300 to-indigo-400 dark:from-blue-800 dark:to-indigo-900 rounded-full flex items-center justify-center">
                 <Plus className="h-6 w-6 text-white" />
               </div>
               <p className="text-sm text-muted-foreground">Iniciar sessão...</p>
@@ -131,8 +131,7 @@ function EmptySubjectsState() {
     <div className="text-center rounded-2xl border-2 border-dashed col-span-1 md:col-span-2 lg:col-span-3 border-muted-foreground/30 p-12 md:p-16">
       <h3 className="text-xl font-semibold mb-2">Nenhuma matéria encontrada</h3>
       <p className="text-muted-foreground max-w-md mx-auto">
-        Não foram encontradas matérias com questões disponíveis. Peça ao
-        administrador para adicionar novo conteúdo.
+        Não foram encontradas matérias com questões disponíveis. Peça ao administrador para adicionar novo conteúdo.
       </p>
     </div>
 ); }
@@ -158,10 +157,7 @@ async function SubjectsList() {
           <h2 className="text-3xl font-bold">Banco de Estudo (Questões)</h2>
           {subjects && (
             <p className="mt-2 text-muted-foreground">
-              {subjects.length}{" "}
-              {subjects.length === 1
-                ? "matéria encontrada"
-                : "matérias encontradas"}
+              Com{' '} {subjects.length}{" "} {subjects.length === 1 ? "matéria encontrada" : "matérias encontradas"}!
             </p>
           )}
         </div>

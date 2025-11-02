@@ -52,11 +52,11 @@ function NewNoteCardSkeleton() {
       <CardContent className="p-6 pt-3 text-center space-y-6">
         <p className="text-3xl font-bold">...</p>
         <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
-          <div className="rounded-full h-2 bg-blue-300/50" style={{ width: `50%` }} />
+          <div className="rounded-full h-2 bg-blue-300/50 dark:bg-blue-800/50" style={{ width: `50%` }} />
         </div>
       </CardContent>
       <div className="absolute -top-2 right-5">
-        <Bookmark className="h-10 w-10 fill-blue-300/50 text-blue-300/50" />
+        <Bookmark className="h-10 w-10 fill-blue-300/50 text-blue-300/50 dark:fill-blue-800/50 dark:text-blue-800/50" />
       </div>
     </Card>
 ); }
@@ -182,7 +182,7 @@ export default async function NotebookPage() {
 
               <Suspense fallback={<NewNoteCardSkeleton />}>
                 <NewNoteForm subjects={subjects}>
-                  <Card className="border-2 border-blue-300 dark:border-blue-600 relative overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:scale-101 transition-all duration-300">
+                  <Card className="border-2 border-blue-300 dark:border-blue-800 relative overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:scale-101 transition-all duration-300">
                     <CardHeader className="px-6 pt-0">
                       <div className="flex items-center gap-3">
                         <TextAlignStart className="h-6 w-6 text-muted-foreground" />
@@ -198,13 +198,13 @@ export default async function NotebookPage() {
                       <p className="text-3xl font-bold">{notesCount}</p>
                       <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                         <div
-                          className="rounded-full h-2 bg-blue-300 dark:bg-blue-600 transition-all duration-500"
+                          className="rounded-full h-2 bg-blue-300 dark:bg-blue-800 transition-all duration-500"
                           style={{ width: `0%` }}
                         />
                       </div>
                     </CardContent>
                     <div className="absolute -top-2 right-5">
-                      <Bookmark className="h-10 w-10 fill-blue-300 text-blue-300 dark:text-blue-600" />
+                      <Bookmark className="h-10 w-10 fill-blue-300 text-blue-300 dark:fill-blue-800 dark:text-blue-800" />
                     </div>
                   </Card>
                 </NewNoteForm>
@@ -266,7 +266,7 @@ export default async function NotebookPage() {
                   <p className="text-3xl font-bold">{highlightsCount}</p>
                   <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                     <div
-                      className="rounded-full h-2 bg-yellow-500"
+                      className="rounded-full h-2 bg-yellow-500 dark:bg-yellow-800"
                       style={{
                         width: `${
                           totalEntries > 0
@@ -281,7 +281,7 @@ export default async function NotebookPage() {
 
               <Suspense fallback={<NewNoteCardSkeleton />}>
                 <NewNoteForm subjects={subjects}>
-                  <Card className="border-2 border-blue-300 dark:border-blue-600 relative overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:scale-101 transition-all duration-300">
+                  <Card className="border-2 border-blue-300 dark:border-blue-800 relative overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:scale-101 transition-all duration-300">
                     <CardHeader className="px-6 pt-0">
                       <div className="flex items-center gap-3">
                         <TextAlignStart className="h-6 w-6 text-muted-foreground" />
@@ -297,7 +297,7 @@ export default async function NotebookPage() {
                       <p className="text-3xl font-bold">{notesCount}</p>
                       <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                         <div
-                          className="rounded-full h-2 bg-blue-300 dark:bg-blue-600 transition-all duration-500"
+                          className="rounded-full h-2 bg-blue-300 dark:bg-blue-800 transition-all duration-500"
                           style={{
                             width: `${
                               totalEntries > 0
@@ -310,7 +310,7 @@ export default async function NotebookPage() {
                     </CardContent>
 
                     <div className="absolute -top-2 right-5">
-                      <Bookmark className="h-10 w-10 fill-blue-300 text-blue-300 dark:text-blue-600" />
+                      <Bookmark className="h-10 w-10 fill-blue-300 text-blue-300 dark:fill-blue-800 dark:text-blue-800" />
                     </div>
                   </Card>
                 </NewNoteForm>
@@ -379,7 +379,7 @@ export default async function NotebookPage() {
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <blockquote className="text-sm p-3 bg-accent rounded-lg border-l-4 border-blue-300 dark:border-blue-600 mt-2">
+                          <blockquote className="text-sm p-3 bg-accent rounded-lg border-l-4 border-blue-300 dark:border-blue-800 mt-2">
                             <p className="text-accent-foreground/90 whitespace-pre-wrap">
                               {entry.entry_type === "highlight"
                                 ? `"${entry.content}"`
