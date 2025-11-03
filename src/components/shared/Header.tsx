@@ -176,7 +176,7 @@ export default function Header({
                     </div>
                   </div>
                   <form action={signOut}>
-                    <Button variant="outline" size="sm" className="gap-2">
+                    <Button variant="outline" size="sm" radius="full" className="gap-3">
                       <LogOut className="h-4 w-4" />
                       Sair
                     </Button>
@@ -267,7 +267,7 @@ export default function Header({
               <div className="flex items-center gap-2">
                 <ThemeToggle />
                 <Link href="/login">
-                  <Button size="sm" className="gap-2">
+                  <Button radius="full" size="sm" className="gap-3">
                     <LogIn className="h-4 w-4" />
                     Entrar
                   </Button>
