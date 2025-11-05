@@ -38,7 +38,7 @@ Oslo é projetado para máxima eficiência. Pratique com questões, revise seus 
 
 ## Rodando
 
-1.  **Clone o repositório e instale as dependências:**
+1.  **Clone o repositório e in4stale as dependências:**
 
 ```bash
 git clone https://github.com/efdourado/fs-oslo.git && cd fs-oslo && npm install
