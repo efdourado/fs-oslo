@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { type User } from "@supabase/supabase-js";
-import { Button } from "@/components/ui/button";
 import { signOut } from "@/app/actions";
+
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -21,7 +22,6 @@ import {
   LogIn,
   Menu,
   Kanban,
-  X,
   Activity,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -35,75 +35,86 @@ export default function Header({
 }) {
   const navLinks = (
     <div className="space-y-1">
-      <Button
-        asChild
-        variant="ghost"
-        className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
-      >
-        <Link href="/dashboard">
-          <div className="flex flex-row gap-3 items-center">
-            <Kanban className="size-4 text-muted-foreground" />
-            Dashboard
-          </div>
-        </Link>
-      </Button>
+      <SheetClose asChild>
+        <Button
+          asChild
+          variant="ghost"
+          className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
+        >
+          <Link href="/dashboard">
+            <div className="flex flex-row gap-3 items-center">
+              <Kanban className="size-4 text-muted-foreground" />
+              Dashboard
+            </div>
+          </Link>
+        </Button>
+      </SheetClose>
 
-      <Button
-        asChild
-        variant="ghost"
-        className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
-      >
-        <Link href="/review">
-          <div className="flex flex-row gap-3 items-center">
-            <CornerLeftUp className="size-4 text-muted-foreground" />
-            Revisão (Questões)
-          </div>
-        </Link>
-      </Button>
+      <SheetClose asChild>
+        <Button
+          asChild
+          variant="ghost"
+          className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
+        >
+          <Link href="/review">
+            <div className="flex flex-row gap-3 items-center">
+              <CornerLeftUp className="size-4 text-muted-foreground" />
+              Revisão (Questões)
+            </div>
+          </Link>
+        </Button>
+      </SheetClose>
 
-      <Button
-        asChild
-        variant="ghost"
-        className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
-      >
-        <Link href="/notebook">
-          <div className="flex flex-row gap-3 items-center">
-            <LayoutList className="size-4 text-muted-foreground" />
-            Meu Caderno
-          </div>
-        </Link>
-      </Button>
+      <SheetClose asChild>
+        <Button
+          asChild
+          variant="ghost"
+          className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
+        >
+          <Link href="/notebook">
+            <div className="flex flex-row gap-3 items-center">
+              <LayoutList className="size-4 text-muted-foreground" />
+              Meu Caderno
+            </div>
+          </Link>
+        </Button>
+      </SheetClose>
 
       {isAdmin && (
         <>
           <div className="px-4 py-2 text-xs font-semibold text-muted-foreground tracking-wider mt-5">
             Para administração
           </div>
-          <Button
-            asChild
-            variant="ghost"
-            className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
-          >
-            <Link href="/questions">
-              <div className="flex flex-row gap-3 items-center">
-                <PlusCircle className="size-4 text-muted-foreground" />
-                Questões
-              </div>
-            </Link>
-          </Button>
 
-          <Button
-            asChild
-            variant="ghost"
-            className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
-          >
-            <Link href="/subjects">
-              <div className="flex flex-row gap-3 items-center">
-                <Activity className="size-4 text-muted-foreground" />
-                Sessões
-              </div>
-            </Link>
-          </Button>
+          <SheetClose asChild>
+            <Button
+              asChild
+              variant="ghost"
+              className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
+            >
+              <Link href="/questions">
+                <div className="flex flex-row gap-3 items-center">
+                  <PlusCircle className="size-4 text-muted-foreground" />
+                  Questões
+                </div>
+              </Link>
+            </Button>
+          </SheetClose>
+
+          <SheetClose asChild>
+            <Button
+              asChild
+              variant="ghost"
+              className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
+            >
+              <Link href="/subjects">
+                <div className="flex flex-row gap-3 items-center">
+                  <Activity className="size-4 text-muted-foreground" />
+                  Sessões
+                </div>
+              </Link>
+            </Button>
+          </SheetClose>
         </>
       )}
     </div>
@@ -130,7 +141,7 @@ export default function Header({
               <>
 
                 {/* Navegação Desktop */}
-                <nav className="hidden md:flex items-center gap-1">
+                <nav className="hidden lg:flex items-center gap-1">
                   <Button asChild variant="ghost" size="sm" radius="full" className="gap-2">
                     <Link href="/dashboard">
                       <Kanban className="h-4 w-4" />
@@ -174,7 +185,7 @@ export default function Header({
                 </nav>
 
                 {/* Ações do Usuário Desktop */}
-                <div className="hidden md:flex items-center gap-3 border-l border-border pl-3 ml-1">
+                <div className="hidden lg:flex items-center gap-3 border-l border-border pl-3 ml-1">
                   <ThemeToggle />
                   <div className="relative group">
                     <div className="w-8 h-8 bg-gradient-to-br from-secondary to-muted rounded-full flex items-center justify-center border border-border cursor-pointer transition-all duration-200 hover:shadow-md">
@@ -196,7 +207,7 @@ export default function Header({
                 </div>
 
                 {/* Gatilho do Menu Mobile */}
-                <div className="md:hidden flex items-center gap-2">
+                <div className="lg:hidden flex items-center gap-2">
                   <ThemeToggle />
                   <Sheet>
                     <SheetTrigger asChild>

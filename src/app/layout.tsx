@@ -45,7 +45,7 @@ export default async function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Header user={user} isAdmin={isAdmin} />
 
-            <main className="flex-grow container mx-auto pt-20 pb-30">
+            <main className="flex-grow container pt-6 pb-12 md:pt-20 md:pb-30 px-4 md:mx-auto">
               {children}
             </main>
             <Footer user={user} />

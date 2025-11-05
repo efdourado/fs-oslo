@@ -7,8 +7,9 @@ import { redirect } from 'next/navigation'
 export async function signOut() {
   const supabase = await createServer()
   await supabase.auth.signOut()
-  return redirect('/login')
+  return redirect('/')
 }
+
 export async function createQuizSession(subjectId: string): Promise<string> {
   const supabase = await createServer();
   const { data: { user } } = await supabase.auth.getUser();
@@ -45,7 +46,6 @@ export async function updateQuizSession(sessionId: string, score: number, totalQ
 
   if (error) {
     console.error('Erro ao finalizar sessão de quiz:', error);
-    // não lançamos um erro aqui para não quebrar a experiência do usuário se a atualização falhar
   }
   revalidatePath('/dashboard');
 }
