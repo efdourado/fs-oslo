@@ -5,7 +5,8 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section
-      className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] -mt-20 -mb-30 flex items-center justify-center bg-cover bg-center bg-no-repeat"      style={{
+      className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] -mt-20 -mb-30 flex items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{
         backgroundImage: "url('/obooks.jpg')",
         minHeight: "calc(100vh - 4rem)",
       }}
