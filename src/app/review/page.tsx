@@ -62,9 +62,11 @@ type ReviewQuestion = {
   cargo: string | null;
 };
 type ReviewPageProps = {
+  params: Promise<Record<string, never>>;
+  
   searchParams: Promise<{
-    subject?: string;
-    errorType?: string;
+    subject?: string | string[] | undefined;
+    errorType?: string | string[] | undefined;
 }>; };
 
 function getErrorBarColor(percentage: number) {
@@ -372,133 +374,135 @@ export default async function ReviewPage({ searchParams }: ReviewPageProps) {
                   </p>
                 </div>
 
-                {questions.map((question) => (
-                  <Card
-                    className="border-2 border-gray-200 dark:border-gray-600 pb-0 relative group"
-                    key={question.question_id}
-                  >
-                    <div className="absolute top-6 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <RemoveReviewButton
-                        questionId={question.question_id}
-                        questionStatement={question.statement}
-                      />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {questions.map((question) => (
+                    <Card
+                      className="border-2 border-gray-200 dark:border-gray-600 pb-0 relative group flex flex-col"
+                      key={question.question_id}
+                    >
+                      <div className="absolute top-6 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <RemoveReviewButton
+                          questionId={question.question_id}
+                          questionStatement={question.statement}
+                        />
+                      </div>
 
-                    <CardHeader className="px-6 pt-0">
-                      <div className="flex items-center gap-3">
-                        <Book className="h-6 w-6 text-muted-foreground" />
+                      <CardHeader className="px-6 pt-0">
+                        <div className="flex items-center gap-3">
+                          <Book className="h-6 w-6 text-muted-foreground" />
+                          <div>
+                            <CardTitle className="text-lg">
+                              {question.topic_name} ({question.banca})
+                            </CardTitle>
+
+                            <CardDescription>
+                              {question.orgao} ({question.cargo})
+                            </CardDescription>
+                          </div>
+                        </div>
+                      </CardHeader>
+
+                      <CardContent className="space-y-4 flex-grow">
                         <div>
-                          <CardTitle className="text-lg">
-                            {question.topic_name} ({question.banca})
-                          </CardTitle>
-
-                          <CardDescription>
-                            {question.orgao} ({question.cargo})
-                          </CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-4">
-                      <div>
-                        <p className="text-accent-foreground/90 font-medium mb-6">
-                          {question.statement}
-                        </p>
-                        <h4 className="text-sm text-muted-foreground mb-4">
-                          Opções:
-                        </h4>
-                        <ul className="space-y-2">
-                          {question.options.map((option) => {
-                            const isSelected =
-                              option.id === question.last_selected_option_id;
-                            const isCorrect = option.is_correct;
-
-                            return (
-                              <li
-                                key={option.id}
-                                className={cn(
-                                  "flex items-start gap-3 p-3 rounded-md border text-sm",
-                                  isCorrect
-                                    ? "border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-950"
-                                    : "",
-                                  isSelected && !isCorrect
-                                    ? "border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-950"
-                                    : ""
-                                )}
-                              >
-                                {isCorrect ? (
-                                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 shrink-0" />
-                                ) : isSelected && !isCorrect ? (
-                                  <ChartNoAxesColumn className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
-                                ) : (
-                                  <div className="h-5 w-5 shrink-0" />
-                                )}
-
-                                <div className="flex-1">
-                                  <p>{option.option_text}</p>
-                                </div>
-                              </li>
-                          ); })}
-                        </ul>
-                      </div>
-
-                      {question.explanation && (
-                        <div className="pt-4 border-t">
+                          <p className="text-accent-foreground/90 font-medium mb-6">
+                            {question.statement}
+                          </p>
                           <h4 className="text-sm text-muted-foreground mb-4">
-                            Justificativa:
+                            Opções:
                           </h4>
-                          <blockquote className="text-sm p-3 bg-accent rounded-lg border-l-4 border-blue-300 dark:border-blue-600 mt-2">
-                            <p className="text-accent-foreground/90">
-                              {question.explanation}
-                            </p>
-                          </blockquote>
-                        </div>
-                      )}
-                    </CardContent>
+                          <ul className="space-y-2">
+                            {question.options.map((option) => {
+                              const isSelected =
+                                option.id === question.last_selected_option_id;
+                              const isCorrect = option.is_correct;
 
-                    <CardFooter className="relative mt-4 bg-gray-200 dark:bg-gray-600 text-sm rounded-b-lg pb-4 border-t pt-4 flex flex-col gap-3">
-                      <div className="flex flex-col sm:flex-row items-center justify-between w-full">
-                        <div className="flex items-center gap-2 text-foreground">
-                          <RefreshCw className="h-4 w-4 text-foreground" />
-                          <span>
-                            <span className="font-semibold text-foreground">
-                              {question.error_count}
-                            </span>{" "}
-                            {question.error_count === 1 ? "erro" : "erros"} nesta
-                            questão!
-                          </span>
+                              return (
+                                <li
+                                  key={option.id}
+                                  className={cn(
+                                    "flex items-start gap-3 p-3 rounded-md border text-sm",
+                                    isCorrect
+                                      ? "border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-950"
+                                      : "",
+                                    isSelected && !isCorrect
+                                      ? "border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-950"
+                                      : ""
+                                  )}
+                                >
+                                  {isCorrect ? (
+                                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 shrink-0" />
+                                  ) : isSelected && !isCorrect ? (
+                                    <ChartNoAxesColumn className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
+                                  ) : (
+                                    <div className="h-5 w-5 shrink-0" />
+                                  )}
+
+                                  <div className="flex-1">
+                                    <p>{option.option_text}</p>
+                                  </div>
+                                </li>
+                            ); })}
+                          </ul>
                         </div>
 
-                        <div className="flex items-center gap-3 mt-2 sm:mt-0">
-                          {question.error_types.has("attention") && (
-                            <div className="flex items-center gap-1 text-yellow-800 dark:text-yellow-300">
-                              <AlertCircle className="h-4 w-4" />
-                              <span className="text-xs font-medium">
-                                Cautela
-                              </span>
-                            </div>
-                          )}
-                          {question.error_types.has("knowledge") && (
-                            <div className="flex items-center gap-1 text-red-800 dark:text-red-300">
-                              <ChartPie className="h-4 w-4" />
-                              <span className="text-xs font-medium">
-                                Conhecimento
-                              </span>
-                            </div>
-                          )}
-                          {question.error_types.size === 0 && (
-                            <div className="flex items-center gap-1 text-foreground">
-                              <CircleQuestionMark className="h-4 w-4" />
-                              <span className="text-xs font-medium">
-                                Sem classificação
-                              </span>
-                            </div>
-                          )}
+                        {question.explanation && (
+                          <div className="pt-4 border-t">
+                            <h4 className="text-sm text-muted-foreground mb-4">
+                              Justificativa:
+                            </h4>
+                            <blockquote className="text-sm p-3 bg-accent rounded-lg border-l-4 border-blue-300 dark:border-blue-600 mt-2">
+                              <p className="text-accent-foreground/90">
+                                {question.explanation}
+                              </p>
+                            </blockquote>
+                          </div>
+                        )}
+                      </CardContent>
+
+                      <CardFooter className="relative mt-auto bg-gray-200 dark:bg-gray-600 text-sm rounded-b-lg pb-4 border-t pt-4 flex flex-col gap-3">
+                        <div className="flex flex-col sm:flex-row items-center justify-between w-full">
+                          <div className="flex items-center gap-2 text-xs text-foreground">
+                            <RefreshCw className="h-4 w-4 text-foreground" />
+                            <span>
+                              <span className="font-semibold text-foreground">
+                                {question.error_count}
+                              </span>{" "}
+                              {question.error_count === 1 ? "erro" : "erros"}{" "}
+                              nesta questão!
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-3 mt-2 sm:mt-0">
+                            {question.error_types.has("attention") && (
+                              <div className="flex items-center gap-1 text-yellow-800 dark:text-yellow-300">
+                                <AlertCircle className="h-4 w-4" />
+                                <span className="text-xs font-medium">
+                                  Cautela
+                                </span>
+                              </div>
+                            )}
+                            {question.error_types.has("knowledge") && (
+                              <div className="flex items-center gap-1 text-red-800 dark:text-red-300">
+                                <ChartPie className="h-4 w-4" />
+                                <span className="text-xs font-medium">
+                                  Conhecimento
+                                </span>
+                              </div>
+                            )}
+                            {question.error_types.size === 0 && (
+                              <div className="flex items-center gap-1 text-foreground">
+                                <CircleQuestionMark className="h-4 w-4" />
+                                <span className="text-xs font-medium">
+                                  Sem classificação
+                                </span>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                ))}
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

@@ -64,7 +64,7 @@ function SubjectCard({ subject }: { subject: SubjectStat }) {
             <div>
               <CardTitle className="text-lg">{subject.name}</CardTitle>
               <CardDescription>
-                Com um total de {subject.question_count}{" "}
+                Com um total de <strong>{subject.question_count}</strong>{" "}
                 {subject.question_count === 1
                   ? "questão disponível."
                   : "questões disponíveis."}

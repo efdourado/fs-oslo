@@ -22,7 +22,6 @@ import {
   LogIn,
   Menu,
   Kanban,
-  Activity,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -95,22 +94,7 @@ export default function Header({
               <Link href="/questions">
                 <div className="flex flex-row gap-3 items-center">
                   <PlusCircle className="size-4 text-muted-foreground" />
-                  Questões
-                </div>
-              </Link>
-            </Button>
-          </SheetClose>
-
-          <SheetClose asChild>
-            <Button
-              asChild
-              variant="ghost"
-              className="w-full justify-start gap-3 h-auto py-3 rounded-xl"
-            >
-              <Link href="/subjects">
-                <div className="flex flex-row gap-3 items-center">
-                  <Activity className="size-4 text-muted-foreground" />
-                  Sessões
+                  Questões & Sessões
                 </div>
               </Link>
             </Button>
@@ -169,18 +153,10 @@ export default function Header({
                       >
                         <Link href="/questions">
                           <PlusCircle className="h-4 w-4" />
-                          Questões
+                          Questões & Sessões
                         </Link>
                       </Button>
                     </>
-                  )}
-                  {isAdmin && (
-                    <Button asChild variant="ghost" size="sm" radius="full" className="gap-2">
-                      <Link href="/subjects">
-                        <Activity className="h-4 w-4" />
-                        Sessões
-                      </Link>
-                    </Button>
                   )}
                 </nav>
 

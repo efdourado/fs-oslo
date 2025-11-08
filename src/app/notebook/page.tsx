@@ -281,23 +281,23 @@ export default async function NotebookPage() {
 
               <Suspense fallback={<NewNoteCardSkeleton />}>
                 <NewNoteForm subjects={subjects}>
-                  <Card className="border-2 border-blue-300 dark:border-blue-800 relative overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:scale-101 transition-all duration-300">
-                    <CardHeader className="px-6 pt-0">
+                  <Card className="pt-0 border-2 border-blue-300 dark:border-blue-800 relative overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:scale-101 transition-all duration-300">
+                    <CardHeader className="px-6 pt-5 pb-2 bg-blue-300 dark:bg-blue-800">
                       <div className="flex items-center gap-3">
-                        <TextAlignStart className="h-6 w-6 text-muted-foreground" />
+                        <TextAlignStart className="h-6 w-6" />
                         <div>
                           <CardTitle className="text-lg">Notas</CardTitle>
-                          <CardDescription>
+                          <CardDescription className="text-foreground">
                             Clique e adicione uma outra anotação pessoal!
                           </CardDescription>
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent className="p-6 pt-3 text-center space-y-6">
+                    <CardContent className="p-6 -mt-4 text-center space-y-6">
                       <p className="text-3xl font-bold">{notesCount}</p>
                       <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                         <div
-                          className="rounded-full h-2 bg-blue-300 dark:bg-blue-800 transition-all duration-500"
+                          className="rounded-full h-2 bg-primary transition-all duration-500"
                           style={{
                             width: `${
                               totalEntries > 0
@@ -308,10 +308,6 @@ export default async function NotebookPage() {
                         />
                       </div>
                     </CardContent>
-
-                    <div className="absolute -top-2 right-5">
-                      <Bookmark className="h-10 w-10 fill-blue-300 text-blue-300 dark:fill-blue-800 dark:text-blue-800" />
-                    </div>
                   </Card>
                 </NewNoteForm>
               </Suspense>
